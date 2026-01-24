@@ -39,6 +39,8 @@ def generate_sentence(matrix: dict, start: tuple, max_words=200, temperature=0.1
     output = output.replace(' ,', ',')
     output = output.replace(' ?', '?')
     output = output.replace(' !', '!')
+    output = output.replace('{', '*')
+    output = output.replace('}', '*')
     output = output.capitalize()
 
     return output
