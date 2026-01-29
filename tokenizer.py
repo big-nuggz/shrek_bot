@@ -26,10 +26,10 @@ class WordTokenizer(Tokenizer):
     def __init__(self):
         super().__init__()
 
-    def process_data(self, data, lower=True, add_sol_eol=True):
+    def process_data(self, data, lower=True, add_sol_eol=True) -> list:
         return _process_text(data, lower=lower, delimiter=' ', add_sol_eol=add_sol_eol)
 
-    def tokenize(self, data):
+    def tokenize(self, data) -> list:
         tokens = [self.to_token(word) for word in data]
         return tokens
     
@@ -59,10 +59,10 @@ class CharacterTokenizer(Tokenizer):
     def __init__(self):
         super().__init__()
 
-    def process_data(self, data, lower=True, add_sol_eol=True):
+    def process_data(self, data, lower=True, add_sol_eol=True) -> list:
         return _process_text(data, lower=lower, delimiter=None, add_sol_eol=add_sol_eol)
 
-    def tokenize(self, data):
+    def tokenize(self, data) -> list:
         tokens = [self.to_token(c) for c in data]
         return tokens
     
@@ -110,10 +110,16 @@ def _process_text(data: str, lower=True, delimiter=' ', add_sol_eol=True) -> str
     if lower:
         processed = processed.lower()
 
+    # treat punctuations as words (single tokens)
+    processed = processed.replace('.', ' .')
+    processed = processed.replace(',', ' ,')
+    processed = processed.replace('?', ' ?')
+    processed = processed.replace('!', ' !')
+
     if delimiter:
-        processed = [chunk for chunk in processed.split(delimiter)]
+        processed = [chunk for chunk in processed.split(delimiter) if chunk != '']
     else:
-        processed = [c for c in processed]
+        processed = [c for c in processed if c != '']
 
     if not add_sol_eol:
         return processed
@@ -123,7 +129,7 @@ def _process_text(data: str, lower=True, delimiter=' ', add_sol_eol=True) -> str
     for element in processed:
         i += 1
 
-        if (element[-1] in ['.', '?', '!']):
+        if (element in ['.', '?', '!']):
             processed = processed[:i] + ['[END_OF_LINE]', '[START_OF_LINE]'] + processed[i:]
             i += 2
 

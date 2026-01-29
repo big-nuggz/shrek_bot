@@ -3,13 +3,15 @@ import time
 
 import discord
 
-from constants import MATRIX_PATH, TOKEN_PATH, COOLDOWN_SECONDS
+from constants import MATRIX_PATH, TOKENIZER, TEMPERATURE, TOKEN_PATH, COOLDOWN_SECONDS
 from matrix import load_matrix
 from generator import generate_sentence
 
 
 matrix = load_matrix(MATRIX_PATH)
-all_SOL = [key for key in matrix.keys() if key[0] == '[SOL]'] # all starting words
+tokenizer = TOKENIZER()
+
+all_SOL = [key for key in matrix.keys() if key[0] == tokenizer.SOL] # all starting words
 
 # discord stuff
 with open(TOKEN_PATH, 'r', encoding='utf8') as f:
@@ -40,7 +42,7 @@ async def on_message(message):
             return
 
         starting_words = all_SOL[random.randint(0, len(all_SOL) - 1)]
-        output = generate_sentence(matrix, starting_words, temperature=10)
+        output = generate_sentence(matrix, tokenizer, starting_words, temperature=TEMPERATURE)
 
         await message.reply(output)
 
