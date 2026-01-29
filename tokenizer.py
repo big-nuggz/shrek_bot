@@ -1,4 +1,7 @@
 class Tokenizer:
+    '''
+    base tokenizer class, inherit and fill in to specifications
+    '''
     def __init__(self):
         self.SOL = (123456789,)
         self.EOL = (987654321,)
@@ -108,9 +111,9 @@ def _process_text(data: str, lower=True, delimiter=' ', add_sol_eol=True) -> str
         processed = processed.lower()
 
     if delimiter:
-        processed = [chunk for chunk in data.split(delimiter)]
+        processed = [chunk for chunk in processed.split(delimiter)]
     else:
-        processed = [c for c in data]
+        processed = [c for c in processed]
 
     if not add_sol_eol:
         return processed
@@ -135,9 +138,9 @@ if __name__ == "__main__":
     for tokenizer_class in [WordTokenizer, CharacterTokenizer]:
         tokenizer = tokenizer_class()
 
-        processed = tokenizer.process_data(data)
+        processed = tokenizer.process_data(data) # ready raw text data so it's a list tokenizer can process
         # print(processed)
-        tokens = tokenizer.tokenize(processed)
+        tokens = tokenizer.tokenize(processed) # tokenize the processed list
         # print(tokens)
-        text = tokenizer.stringify(tokens)
+        text = tokenizer.stringify(tokens) # convert the tokens back into string
         print(text)
