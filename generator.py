@@ -36,6 +36,7 @@ def generate_sentence(matrix: dict, tokenizer: Tokenizer, start: tuple, max_toke
         output.append(choice)
 
     output = tokenizer.stringify(output)
+    output = output.strip()
     output = output.replace(' .', '.')
     output = output.replace(' ,', ',')
     output = output.replace(' ?', '?')
