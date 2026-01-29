@@ -8,6 +8,6 @@ That said, script used to fit the probability matrix was obtained from [here](ht
 ## Usage
 Save your discord bot token (API key) in `./token.txt`, then run the `./main.py`. Invite the bot in your server and have fun.
 
-If your want to generate your own matrix, makes ure to download the script file inside `./data`, then run the `./matrix.py`.
+If you want to generate your own matrix, makes ure to download the script file inside `./data`, then run the `./matrix.py`.
 
 This will generate your Markov chain matrix. You can configure the behavior/path inside `./constants.py`.
